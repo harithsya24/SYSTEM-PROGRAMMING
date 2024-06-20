@@ -1,8 +1,21 @@
-CC= gcc
-CFLAGS = -Wall -Wextra -pedantic
+CC = gcc
+CFLAGS = -Wall -Wextra -pedantic -std=c99
 
-maxfile: maxfile.c
-	$(CC) $(CFLAGS) -o maxfile maxfile.c
+TARGET = minishell
+
+SRCS = minishell.c
+OBJS = $(SRCS:.c=.o)
+
+.PHONY: all clean
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm -f maxfile
+	rm -f $(TARGET) $(OBJS)
+
